@@ -4,3 +4,13 @@ bower_components/
 
 build/
 dist/
+web
+src/js/libs
+themes
+
+hybrid/platforms
+hybrid/www/*
+
+!hybrid/plugins
+hybrid/plugins/*
+!hybrid/plugins/fetch.json
