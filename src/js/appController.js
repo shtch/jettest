@@ -20,33 +20,27 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
        // Router setup
        self.router = oj.Router.rootInstance;
        self.router.configure({
-         'dashboard': {label: 'Dashboard', isDefault: true},
-         'incidents': {label: 'Incidents'},
-         'customers': {label: 'Customers'},
-         'about': {label: 'About'}
+         'dashboard': {label: 'Госпитализированные', isDefault: true},
+         'incidents': {label: 'Очередь'},
+         'customers': {label: 'Архив'},
+         'about': {label: 'Справка'}
        });
       oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
 
       // Navigation setup
       var navData = [
-      {name: 'Dashboard', id: 'dashboard',
+      {name: 'Госпитализированные', id: 'dashboard',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-chart-icon-24'},
-      {name: 'Incidents', id: 'incidents',
+      {name: 'Очередь', id: 'incidents',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-fire-icon-24'},
-      {name: 'Customers', id: 'customers',
+      {name: 'Архив', id: 'customers',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-people-icon-24'},
-      {name: 'About', id: 'about',
+      {name: 'Справка', id: 'about',
        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-info-icon-24'}
       ];
       self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
 
       // Drawer
-      // Called by nav drawer option change events so we can close drawer after selection
-      self.navChangeHandler = function (event, data) {
-       if (data.option === 'selection' && data.value !== self.router.stateId()) {
-         self.toggleDrawer();
-       }
-      }
       // Close offcanvas on medium and larger screens
       self.mdScreen.subscribe(function() {oj.OffcanvasUtils.close(self.drawerParams);});
       self.drawerParams = {
@@ -58,12 +52,14 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojknockout', 'ojs/ojarray
       self.toggleDrawer = function() {
         return oj.OffcanvasUtils.toggle(self.drawerParams);
       }
+      // Add a close listener so we can move focus back to the toggle button when the drawer closes
+      $("#navDrawer").on("ojclose", function() { $('#drawerToggleButton').focus(); });
 
       // Header
       // Application Name used in Branding Area
-      self.appName = ko.observable("Платформа Джет");
+      self.appName = ko.observable("Справка");
       // User Info used in Global Navigation area
-      self.userLogin = ko.observable("john.hancock@oracle.com");
+      self.userLogin = ko.observable("UM1");
 
       // Footer
       function footerLink(name, id, linkTarget) {

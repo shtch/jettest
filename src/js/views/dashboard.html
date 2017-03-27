@@ -1,0 +1,20 @@
+<!--
+ Copyright (c) 2014, 2017, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
+ <div class="oj-hybrid-padding">
+     <h3>Госпитализированные</h3>
+     <div>
+         <table id="table"
+                data-bind="ojComponent: {
+                    component: 'ojTable',
+                    data: datasource,
+                    columns: [
+                        {headerText: 'Problem',  field: 'problem'},
+                        {headerText: 'Description',  field: 'description'},
+                        {headerText: 'Status',  field: 'status'},
+                        {headerText: 'Address',  field: 'formattedAddress'}
+                    ]}">
+         </table>
+     </div>
+ </div>
