@@ -5,12 +5,20 @@
 /*
  * Your dashboard ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection-common'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection-common', 'ojs/ojdatetimepicker', 'ojs/ojswitch'],
         function (oj, ko, $) {
 
             function DashboardViewModel() {
                 var self = this;
                 self.data = ko.observableArray();
+                
+       		self.isChecked = ko.observable(false);
+                self.isChecked.subscribe(function (newValue){
+                    self.disabledState(!newValue);
+                });
+                
+                self.disabledState = ko.observable(true);
+                
                 console.log('3');
                 $.getJSON("https://apex.oracle.com/pls/apex/ask2/rinfo/patient_in/").
                         then(function (json) {

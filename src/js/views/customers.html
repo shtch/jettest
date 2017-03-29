@@ -2,9 +2,29 @@
  Copyright (c) 2014, 2017, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
  -->
-<div class="oj-hybrid-padding">
-  <h3>Customers Content Area</h3>
-  <div>
-      To change the content of this section, you will make edits to the customers.html file located in the /js/views folder.
-  </div>
-</div>
+
+ <div class="oj-hybrid-padding-strt">
+     <h3>Выбывшие</h3>
+
+     <label id="l2"class="oj-label">
+         Выбывшие</label>
+     <div>
+         <table id="table"
+                data-bind="ojComponent: {
+                    component: 'ojTable',
+                    data: datasource,
+                    columns: [
+                        {headerText: '№ ИБ',  field: 'show_id'},
+                        {headerText: 'ФИО пациента',  field: 'show_fullname'},
+                        {headerText: 't',  field: 'tempr_m'},
+                        {headerText: 'Поступил',  field: 'datein',className: 'oj-helper-text-align-right'},
+                        {headerText: 'Отделение',  field: 'division_name'},
+                        {headerText: 'Палата',  field: 'ward_name'},
+                        {headerText: 'Врач',  field: 'doctor_name'},  
+                        {headerText: 'Состояние',  field: 'sost'},
+                        {headerText: 'Дата операции',  field: 'doctor_name'},
+                        {headerText: 'Пропуск',  field: 'doctor_name'}  
+                    ]}">
+         </table>
+     </div>
+ </div>

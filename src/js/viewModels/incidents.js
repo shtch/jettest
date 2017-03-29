@@ -1,110 +1,77 @@
-     
-require(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout','ojs/ojknockout-model',  'ojs/ojmodel', 'ojs/ojcollectiontabledatasource', 'ojs/ojtable', 'ojs/ojpagingcontrol'],
-function(oj, ko, $)
-{   
-  function viewModel()
-  {
-    var self = this;
-    console.log(' 1');
-    
-    self.serviceURL = "http://crys2:9712/ords/ws_admission/wao/a_table/";
+/**
+ * Copyright (c) 2014, 2017, Oracle and/or its affiliates.
+ * The Universal Permissive License (UPL), Version 1.0
+ */
+/*
+ * Your incidents ViewModel code goes here
+ */
+define(['ojs/ojcore', 'knockout', 'jquery'],
+ function(oj, ko, $) {
+  
+    function IncidentsViewModel() {
+      var self = this;
+      // Below are a subset of the ViewModel methods invoked by the ojModule binding
+      // Please reference the ojModule jsDoc for additionaly available methods.
 
-    self.Resources = ko.observableArray([]);
-    self.ResCol = ko.observable();  
-    self.datasource = ko.observable();
+      /**
+       * Optional ViewModel method invoked when this ViewModel is about to be
+       * used for the View transition.  The application can put data fetch logic
+       * here that can return a Promise which will delay the handleAttached function
+       * call below until the Promise is resolved.
+       * @param {Object} info - An object with the following key-value pairs:
+       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
+       * @param {Function} info.valueAccessor - The binding's value accessor.
+       * @return {Promise|undefined} - If the callback returns a Promise, the next phase (attaching DOM) will be delayed until
+       * the promise is resolved
+       */
+      self.handleActivated = function(info) {
+        // Implement if needed
+      };
 
-    self.fetch = function(successCallBack) {
-       console.log(' 5=' );
-        self.ResCol().fetch({
-            success: successCallBack,
-            error: function(jqXHR, textStatus, errorThrown){
-                console.log('Error in fetch: ' + textStatus);
-            }
-           
-        });
-       console.log(' 6=' );
+      /**
+       * Optional ViewModel method invoked after the View is inserted into the
+       * document DOM.  The application can put logic that requires the DOM being
+       * attached here.
+       * @param {Object} info - An object with the following key-value pairs:
+       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
+       * @param {Function} info.valueAccessor - The binding's value accessor.
+       * @param {boolean} info.fromCache - A boolean indicating whether the module was retrieved from cache.
+       */
+      self.handleAttached = function(info) {
+        // Implement if needed
+      };
+
+
+      /**
+       * Optional ViewModel method invoked after the bindings are applied on this View. 
+       * If the current View is retrieved from cache, the bindings will not be re-applied
+       * and this callback will not be invoked.
+       * @param {Object} info - An object with the following key-value pairs:
+       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
+       * @param {Function} info.valueAccessor - The binding's value accessor.
+       */
+      self.handleBindingsApplied = function(info) {
+        // Implement if needed
+      };
+
+      /*
+       * Optional ViewModel method invoked after the View is removed from the
+       * document DOM.
+       * @param {Object} info - An object with the following key-value pairs:
+       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
+       * @param {Function} info.valueAccessor - The binding's value accessor.
+       * @param {Array} info.cachedNodes - An Array containing cached nodes for the View if the cache is enabled.
+       */
+      self.handleDetached = function(info) {
+        // Implement if needed
+      };
     }
-    console.log(' 21' );
 
-    parseRes = function (response) {
-        console.log(' 3='+response['resource_id'] );
-        return {
-            resource_id: response['resource_id'],
-            resource_desc: response['resource_desc']};
-    };
-// Think of this as a single database record or a single table row.
-    console.log(' 22' );
-    var Resource = oj.Model.extend({
-        urlRoot: self.serviceURL,
-        parse: parseRes,
-        idAttribute: 'resource_id'
-    });
-    console.log(' 23' );
-    
-    var myRes = new Resource();
-    console.log(' 24' );
-
-            // this defines our collection and what models it will hold
-    var ResCollection = oj.Collection.extend({
-        url: self.serviceURL,
-        model: myRes
-    });
-    console.log(' 25' );
-
-    self.ResCol(new ResCollection());
-    console.log(' 26' );
-
-    self.datasource(new oj.CollectionTableDataSource(self.ResCol()));
-
-//    }); 
-
-//   var resArray = [{resource_id: 1001, resource_desc: 'ADFPM 1001 neverending',resourceid: 1001, resourcedesc: 'ADFPM 1001 neverending'}];
-
-//    self.datasource = new oj.PagingTableDataSource(new oj.CollectionTableDataSource(self.collection)); 
-//    self.datasource2 = new oj.ArrayTableDataSource(resArray, {idAttribute: 'resourceid'});    
-
-    console.log(' 2');
-    
-
+    /*
+     * Returns a constructor for the ViewModel so that the ViewModel is constrcuted
+     * each time the view is displayed.  Return an instance of the ViewModel if
+     * only one instance of the ViewModel is needed.
+     */
+    return new IncidentsViewModel();
   }
-
-  //var vmd = new viewModel;
- console.log(' 4');
-     var vmd = new viewModel;
-
-  $(document).ready (
-   function()
-   {
- console.log(' 90' );
-
-            vmd.fetch(
-                function(collection, response, options){
- console.log(' 91' + collection + response + options);
-//                 var resData = collection;
-                  // This will create a ko.observable() for each element
-                  // in the deptData response and assign the resulting array
-                  // to the Departments ko observeableArray.
- console.log(' 92');
-//                  vmd.Resources = oj.KnockoutUtils.map(resData, null, true);
-                  //perform a Knockout applyBindings() call binding this
-                  // viewModel with the current DOM
- console.log(' 93');
-                 ko.cleanNode(document.getElementById('tabler'));
- console.log(' 94');
-                  ko.applyBindings(vmd, document.getElementById('tabler'));
-                //Show the content div after the REST call is completed.
- console.log(' 95');
-                  $('#tabler').show();
- console.log(' 96');
-            });
-
-//      ko.cleanNode(document.getElementById('tabler'));
-//       console.log(' 2');
-//      ko.applyBindings(vmd, document.getElementById('tabler'));
-       console.log(' 97');
-    }
-  );
-       console.log(' 99');
-    return viewModel;
-
-});	
+);

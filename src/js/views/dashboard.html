@@ -2,28 +2,37 @@
  Copyright (c) 2014, 2017, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
  -->
- <style type="text/css">
 
-   table tr:nth-child(odd) {color: #000; background: #FFF}
-   table tr:nth-child(even) {color: #000; background: #DFF}
-  </style>
- <div class="oj-hybrid-padding">
+ <div class="oj-hybrid-padding-strt">
      <h3>Госпитализированные</h3>
 
-<div>
+     <label id="l1" for="switch_date_in" class="oj-label-inline">
+         Поступившие:</label>
+          <input id="switch_date_in" data-bind="ojComponent: {component: 'ojSwitch', value: isChecked}" />
+          <input aria-label="input date" 
+                data-bind="ojComponent: {
+             component: 'ojInputDate',
+             max: oj.IntlConverterUtils.dateToLocalIso(new Date()),
+             value: oj.IntlConverterUtils.dateToLocalIso(new Date()),
+             disabled: disabledState,
+             keyboardEdit:'disabled',
+             rootAttributes: {style:'max-width:150px'}}"> 
+     <div>
          <table id="table"
                 data-bind="ojComponent: {
                     component: 'ojTable',
                     data: datasource,
                     columns: [
                         {headerText: '№ ИБ',  field: 'show_id'},
-                        {headerText: 'ФИО',  field: 'show_fullname'},
+                        {headerText: 'ФИО пациента',  field: 'show_fullname'},
                         {headerText: 't',  field: 'tempr_m'},
-                        {headerText: 'Поступил',  field: 'datein',className: 'oj-helper-text-align-right oj-text-secondary-color'},
-                        {headerText: 'Отд.',  field: 'division_name'},
+                        {headerText: 'Поступил',  field: 'datein',className: 'oj-helper-text-align-right'},
+                        {headerText: 'Отделение',  field: 'division_name'},
                         {headerText: 'Палата',  field: 'ward_name'},
+                        {headerText: 'Врач',  field: 'doctor_name'},  
                         {headerText: 'Состояние',  field: 'sost'},
-                        {headerText: 'Врач',  field: 'doctor_name'}                        
+                        {headerText: 'Дата операции',  field: 'doctor_name'},
+                        {headerText: 'Пропуск',  field: 'doctor_name'}  
                     ]}">
          </table>
      </div>
