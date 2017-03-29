@@ -2,18 +2,28 @@
  Copyright (c) 2014, 2017, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
  -->
+ <style type="text/css">
+
+   table tr:nth-child(odd) {color: #000; background: #FFF}
+   table tr:nth-child(even) {color: #000; background: #DFF}
+  </style>
  <div class="oj-hybrid-padding">
      <h3>Госпитализированные</h3>
-     <div>
+
+<div>
          <table id="table"
                 data-bind="ojComponent: {
                     component: 'ojTable',
                     data: datasource,
                     columns: [
-                        {headerText: 'Problem',  field: 'problem'},
-                        {headerText: 'Description',  field: 'description'},
-                        {headerText: 'Status',  field: 'status'},
-                        {headerText: 'Address',  field: 'formattedAddress'}
+                        {headerText: '№ ИБ',  field: 'show_id'},
+                        {headerText: 'ФИО',  field: 'show_fullname'},
+                        {headerText: 't',  field: 'tempr_m'},
+                        {headerText: 'Поступил',  field: 'datein',className: 'oj-helper-text-align-right oj-text-secondary-color'},
+                        {headerText: 'Отд.',  field: 'division_name'},
+                        {headerText: 'Палата',  field: 'ward_name'},
+                        {headerText: 'Состояние',  field: 'sost'},
+                        {headerText: 'Врач',  field: 'doctor_name'}                        
                     ]}">
          </table>
      </div>

@@ -11,17 +11,24 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection
             function DashboardViewModel() {
                 var self = this;
                 self.data = ko.observableArray();
-
-                $.getJSON("http://localhost:8080/incidents?technician=charlie").
+                console.log('3');
+                $.getJSON("http://localhost:8080/ords/restful/rinfo/patient_in/").
                         then(function (json) {
-                            var metrics = json.result;
-                            var location = json.result.location;
+                            var metrics = json.items;
+                            console.log('1'+json);
+//                            var location = json.result.location;
                             $.each(metrics, function () {
+                                console.log('2');
                                 self.data.push({
-                                    problem: this.problem,
-                                    description: this.description,
-                                    status: this.status,
-                                    formattedAddress: this.location.formattedAddress
+                                    case_history_id: this.case_history_id,
+                                    show_id: this.show_id,
+                                    show_fullname: this.show_fullname,
+                                    tempr_m: this.tempr_m,
+                                    datein:  new Date(this.datein).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit',hour:'numeric', minute:'2-digit'}),
+                                    division_name: this.division_name,
+                                    ward_name: this.ward_name,
+                                    sost: this.sost,
+                                    doctor_name: this.doctor_name
                                 });
                             });
                         });
@@ -29,7 +36,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection
 
                 self.datasource = new oj.ArrayTableDataSource(
                         self.data,
-                        {idAttribute: 'problem'}
+                        {idAttribute: 'case_history_id'}
                 );
       // Below are a subset of the ViewModel methods invoked by the ojModule binding
       // Please reference the ojModule jsDoc for additionaly available methods.
