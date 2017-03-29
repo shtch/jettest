@@ -1,16 +1,16 @@
-node_modules/
-bower_components/
-*.log
+node_modules/*
+bower_components/*
+/web
+/themes
 
-build/
-dist/
-web
-src/js/libs
-themes
-
-hybrid/platforms
-hybrid/www/*
+/hybrid/platforms
+/hybrid/www/*
 
 !hybrid/plugins
 hybrid/plugins/*
 !hybrid/plugins/fetch.json
+
+.DS_Store
+Thumbs.db
+scripts/
+src/css/

@@ -12,7 +12,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection
                 var self = this;
                 self.data = ko.observableArray();
                 console.log('3');
-                $.getJSON("http://localhost:8080/ords/restful/rinfo/patient_in/").
+                $.getJSON("https://apex.oracle.com/pls/apex/ask2/rinfo/patient_in/").
                         then(function (json) {
                             var metrics = json.items;
                             console.log('1'+json);
