@@ -36,7 +36,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection
                                     division_name: this.division_name,
                                     ward_name: this.ward_name,
                                     sost: this.sost,
-                                    doctor_name: this.doctor_name
+                                    doctor_name: this.doctor_name,
+                                    dataoperation: (Date.parse(this.dataoperation)?new Date(this.dataoperation).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}):''),
+                                    pass_type_name: this.pass_type_name
                                 });
                             });
                         });
