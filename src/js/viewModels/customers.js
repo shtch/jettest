@@ -5,11 +5,76 @@
 /*
  * Your customer ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery'],
- function(oj, ko, $) {
-  
-    function CustomerViewModel() {
-      var self = this;
+define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','ojs/ojcollectiontabledatasource','ojs/ojtable', 'ojs/ojdatacollection-common'],
+        function (oj, ko, $) {
+
+            function CustomerViewModel() {
+                var self = this;
+//                self.data = ko.observableArray();
+                self.serviceURL = 'https://apex.oracle.com/pls/apex/ask2/rinfo/patient_out/';
+                self.PatCol = ko.observable();
+                self.datasource = ko.observable();
+                
+                /**
+                 * Callback to map attributes returned from RESTful data service to desired view model attribute names
+                 */
+                parsePat = function (response) {
+                    return {case_history_id: response['case_history_id'],
+                        show_ide: response['show_id'],
+                        show_fullname: response['show_fullname'],
+                        date_in: response['date_in'],
+                        date_out: response['date_out']};
+                };
+                
+                var PatRecord = oj.Model.extend({
+                    url: self.serviceURL,
+                    parse: parsePat,
+                    idAttribute: 'case_history_id'});
+                
+                self.pat = new PatRecord();
+
+                self.parseTaskCollection = function (response) {
+                    if (response.hasOwnProperty('collection')) {
+                        var subVal = response['collection'];
+                        if (subVal.hasOwnProperty('array')) {
+                            return subVal['array'].Departments;
+                        }
+                    }
+                    return response;
+                };
+
+                // Create a base object "class" for the entire task dataset 
+                self.PatCollection = oj.Collection.extend({
+                    url: self.serviceURL,
+                    model: self.pat,
+                    parse: self.parsePatCollection,
+                    comparator: "DepartmentId"
+                 });
+
+                // Create a specific instance for the tasks.  This will be filled with instances of the
+                // model "task" for each record when the data is retrieved from the data service
+//                var pats = new PatCollection();
+                self.PatCol(new self.PatCollection());                
+/*
+                // Get the tasks from the server, and call the success: function when finished for further application processing
+                pats.fetch({success: function (collection, response, options) {
+                        patsData = collection;
+                        renderPatViews(patsData);
+                    }});
+                
+                renderPatViews = function (patsData) {
+                    // self.tasks is the Knockout view model structure
+                    this.pats = oj.KnockoutUtils.map(data);
+                    var self = this;
+                }                
+                
+
+                self.datasource = new oj.ArrayTableDataSource(
+                        self.data,
+                        {idAttribute: 'case_history_id'}
+            ); 
+    
+*/    
       // Below are a subset of the ViewModel methods invoked by the ojModule binding
       // Please reference the ojModule jsDoc for additionaly available methods.
 

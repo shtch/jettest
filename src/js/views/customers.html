@@ -6,25 +6,25 @@
  <div class="oj-hybrid-padding-strt">
      <h3>Выбывшие</h3>
 
-     <label id="l2"class="oj-label">
+     <label id="l2" class="oj-label">
          Выбывшие</label>
      <div>
          <table id="table"
                 data-bind="ojComponent: {
                     component: 'ojTable',
                     data: datasource,
-					rootAttributes: {'style':'width: 100%; height:100%;'},
+                    rootAttributes: {'style':'width: 100%; height:100%;'},
                     columns: [
                         {headerText: '№ ИБ',  field: 'show_id'},
                         {headerText: 'ФИО пациента',  field: 'show_fullname'},
-                        {headerText: 't',  field: 'tempr_m'},
-                        {headerText: 'Поступил',  field: 'datein',className: 'oj-helper-text-align-right'},
+                        {headerText: 'Поступил',  field: 'date_in',className: 'oj-helper-text-align-right'},
+                        {headerText: 'Выбыл',  field: 'date_out',className: 'oj-helper-text-align-right'},
+                        {headerText: 'Заключение',  field: 'issue'},
                         {headerText: 'Отделение',  field: 'division_name'},
-                        {headerText: 'Палата',  field: 'ward_name'},
-                        {headerText: 'Врач',  field: 'doctor_name'},  
-                        {headerText: 'Состояние',  field: 'sost'},
-                        {headerText: 'Дата операции',  field: 'doctor_name'},
-                        {headerText: 'Пропуск',  field: 'doctor_name'}  
+                        {headerText: 'Канал',  field: 'hosp_chanel'},  
+                        {headerText: 'Комментарии',  field: 'out_remark'},
+                        {headerText: 'Код',  field: 'IDC-10'},
+                        {headerText: 'Диагноз',  field: 'diagnose'}  
                     ]}">
          </table>
      </div>

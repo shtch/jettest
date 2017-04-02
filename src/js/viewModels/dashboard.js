@@ -32,7 +32,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection
                                     show_id: this.show_id,
                                     show_fullname: this.show_fullname,
                                     tempr_m: this.tempr_m,
-                                    datein:  new Date(this.datein).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit',hour:'numeric', minute:'2-digit'}),
+                                    date_in:  new Date(this.date_in).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit',hour:'numeric', minute:'2-digit'}),
                                     division_name: this.division_name,
                                     ward_name: this.ward_name,
                                     sost: this.sost,

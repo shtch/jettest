@@ -22,12 +22,12 @@
                 data-bind="ojComponent: {
                     component: 'ojTable',
                     data: datasource,
-					rootAttributes: {'style':'width: 100%; height:100%;'},
+                    rootAttributes: {'style':'width: 100%; height:100%;'},
                     columns: [
                         {headerText: '№ ИБ',  field: 'show_id'},
                         {headerText: 'ФИО пациента',  field: 'show_fullname'},
                         {headerText: 't',  field: 'tempr_m'},
-                        {headerText: 'Поступил',  field: 'datein',className: 'oj-helper-text-align-right'},
+                        {headerText: 'Поступил',  field: 'date_in',className: 'oj-helper-text-align-right'},
                         {headerText: 'Отделение',  field: 'division_name'},
                         {headerText: 'Палата',  field: 'ward_name'},
                         {headerText: 'Врач',  field: 'doctor_name'},  
