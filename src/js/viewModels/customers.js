@@ -5,7 +5,7 @@
 /*
  * Your customer ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','ojs/ojcollectiontabledatasource','ojs/ojtable', 'ojs/ojdatacollection-common'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','ojs/ojcollectiontabledatasource','ojs/ojtable', 'ojs/ojinputtext','ojs/ojbutton', 'ojs/ojdatacollection-common'],
         function (oj, ko, $) {
 
             function CustomerViewModel() {
@@ -14,6 +14,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
                 self.serviceURL = 'https://apex.oracle.com/pls/apex/ask2/rinfo/patient_out/';
                 self.PatCol = ko.observable();
                 self.datasource = ko.observable();
+                self.nameSearch = ko.observable('');
+
                 console.log('1');                
                 /**
                  * Callback to map attributes returned from RESTful data service to desired view model attribute names
@@ -59,7 +61,6 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
 //                var pats = new PatCollection();
                 self.PatCol(new self.PatCollection());          
                 self.datasource(new oj.CollectionTableDataSource(self.PatCol()));
-
 /*
                 // Get the tasks from the server, and call the success: function when finished for further application processing
                 pats.fetch({success: function (collection, response, options) {

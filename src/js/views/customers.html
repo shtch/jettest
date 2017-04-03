@@ -4,7 +4,29 @@
  -->
 
  <div class="oj-hybrid-padding-strt">
-     <h3>Выбывшие</h3>
+
+     <div class="oj-flex oj-flex-items-pad">
+         <div class="oj-flex-item oj-sm-12 oj-padding-bottom">
+             <div class="oj-flex oj-flex-items-pad oj-sm-align-items-flex-end">
+                 <div id="pageTitleContainer" class="oj-flex-item oj-sm-2">
+                     <h2 style="margin-bottom:0">Архив</h2>
+                 </div>
+
+                 <div class="oj-flex-item oj-sm-8  oj-flex oj-md-justify-content-center">
+                     <div class="oj-flex-item" style="max-width: 400px; white-space: nowrap">
+                         <input aria-label="search box" placeholder="Введите ФИО в строку поиска" data-bind="value: nameSearch, valueUpdate: 'afterkeydown', ojComponent: {component: 'ojInputText', rootAttributes:{'style':'max-width:100%;'}}"/>
+                         <div id="searchIcon" class="demo-icon-sprite demo-icon-search demo-search-position"></div>
+                     </div>
+                 </div>     
+                 <div class="oj-flex-item oj-sm-2">
+                     <button id="refresh"   style="float: right" data-bind="ojComponent: {component: 'ojButton', icons: {start:'oj-fwk-icon-reload oj-fwk-icon'}, label: 'Обновить'}">
+           
+                     </button>
+                 </div>
+             </div>       
+         </div>   
+     </div>
+
      <div>
          <table id="table"
                 data-bind="ojComponent: {
