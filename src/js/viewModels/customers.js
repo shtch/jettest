@@ -14,16 +14,17 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
                 self.serviceURL = 'https://apex.oracle.com/pls/apex/ask2/rinfo/patient_out/';
                 self.PatCol = ko.observable();
                 self.datasource = ko.observable();
-                
+                console.log('1');                
                 /**
                  * Callback to map attributes returned from RESTful data service to desired view model attribute names
                  */
                 parsePat = function (response) {
-                    return {case_history_id: response['case_history_id'],
-                        show_ide: response['show_id'],
+                console.log('3');
+                return {case_history_id: response['case_history_id'],
+                        show_id: response['show_id'],
                         show_fullname: response['show_fullname'],
-                        date_in: response['date_in'],
-                        date_out: response['date_out']};
+                        date_in: new Date(response['date_in']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}),
+                        date_out: new Date(response['date_out']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'})};
                 };
                 
                 var PatRecord = oj.Model.extend({
@@ -33,12 +34,14 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
                 
                 self.pat = new PatRecord();
 
-                self.parseTaskCollection = function (response) {
-                    if (response.hasOwnProperty('collection')) {
-                        var subVal = response['collection'];
-                        if (subVal.hasOwnProperty('array')) {
-                            return subVal['array'].Departments;
-                        }
+                self.parsePatCollection = function (response) {
+                    console.log('2');
+                    if (response.hasOwnProperty('items')) {
+                        var subVal = response['items'];
+                        return subVal;
+//                        if (subVal.hasOwnProperty('Array')) {
+//                            return subVal['array'].Departments;
+//                        }
                     }
                     return response;
                 };
@@ -54,7 +57,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
                 // Create a specific instance for the tasks.  This will be filled with instances of the
                 // model "task" for each record when the data is retrieved from the data service
 //                var pats = new PatCollection();
-                self.PatCol(new self.PatCollection());                
+                self.PatCol(new self.PatCollection());          
+                self.datasource(new oj.CollectionTableDataSource(self.PatCol()));
+
 /*
                 // Get the tasks from the server, and call the success: function when finished for further application processing
                 pats.fetch({success: function (collection, response, options) {
@@ -74,7 +79,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
                         {idAttribute: 'case_history_id'}
             ); 
     
-*/    
+*/   
       // Below are a subset of the ViewModel methods invoked by the ojModule binding
       // Please reference the ojModule jsDoc for additionaly available methods.
 
