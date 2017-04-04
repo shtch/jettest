@@ -13,14 +13,15 @@
                  </div>
 
                  <div class="oj-flex-item oj-sm-8  oj-flex oj-md-justify-content-center">
-                     <div class="oj-flex-item" style="max-width: 400px; white-space: nowrap">
-                         <input aria-label="search box" placeholder="Введите ФИО в строку поиска" data-bind="value: nameSearch, valueUpdate: 'afterkeydown', ojComponent: {component: 'ojInputText', rootAttributes:{'style':'max-width:100%;'}}"/>
+                     <div class="oj-flex-item" style="max-width: 70%; white-space: nowrap">
+                         <input aria-label="search box" placeholder="Введите ФИО в строку поиска" 
+                                data-bind="ojComponent: {component: 'ojInputText', value: nameSearch, rawValue: currentRawValue, valueUpdate: 'afterkeydown', optionChange: optionChangeCallback, rootAttributes:{'style':'max-width:100%;'}}"/>
                          <div id="searchIcon" class="demo-icon-sprite demo-icon-search demo-search-position"></div>
                      </div>
                  </div>     
                  <div class="oj-flex-item oj-sm-2">
-                     <button id="refresh"   style="float: right" data-bind="ojComponent: {component: 'ojButton', icons: {start:'oj-fwk-icon-reload oj-fwk-icon'}, label: 'Обновить'}">
-           
+                     <button id="refresh"   style="float: right" data-bind="click: refreshClick, ojComponent: {component: 'ojButton', icons: {start:'oj-fwk-icon-reload oj-fwk-icon'}, label: 'Обновить'}">
+
                      </button>
                  </div>
              </div>       

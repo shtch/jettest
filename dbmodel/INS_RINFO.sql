@@ -17,7 +17,11 @@ create table VIRI_PATIENT_ALL (
 );
 -----
 insert into VIRI_PATIENT_ALL (case_history_id, registry_id, show_id, show_fullname, tempr_m, date_in, date_out, division_name, ward_name, doctor_name, sost, dataoperation, pass_type_name)
-values (105488, 1, '4442/16', 'АРЫШНИКОВ ИВАН НИКОЛАЕВИЧ  11.04.74', '35,8', to_date('20-12-2016 22:44:00', 'dd-mm-yyyy hh24:mi:ss'), null, '4 н/х', '8', null, 'Тяжелое', null, 'Временный');
+values (105488, 1, '4442/16', 'АРАШНИКОВ ИВАН НИКОЛАЕВИЧ  11.04.74', '35,8', to_date('20-12-2016 22:44', 'dd-mm-yyyy hh24:mi'), to_date('20-02-2017 09:30', 'dd-mm-yyyy hh24:mi'), '4 н/х', '8', null, 'Тяжелое', null, null);
+insert into VIRI_PATIENT_ALL (case_history_id, registry_id, show_id, show_fullname, tempr_m, date_in, date_out, division_name, ward_name, doctor_name, sost, dataoperation, pass_type_name)
+values (105489, 1, '4443/16', 'БАБУШКИН ИВАН ПЕТРОВИЧ  15.08.71', '36,6', to_date('25-12-2016 10:05', 'dd-mm-yyyy hh24:mi'), to_date('22-02-2017 16:30', 'dd-mm-yyyy hh24:mi'), '4 н/х', '8', null, 'Удовлетворительное', null, null);
+insert into VIRI_PATIENT_ALL (case_history_id, registry_id, show_id, show_fullname, tempr_m, date_in, date_out, division_name, ward_name, doctor_name, sost, dataoperation, pass_type_name)
+values (105499, 1, '443/17', 'ДЕДУШКИН ПЕТР ВАСИЛЬЕВИЧ  15.08.51', '36,6', to_date('25-01-2017 11:25', 'dd-mm-yyyy hh24:mi'), to_date('22-03-2017 15:30', 'dd-mm-yyyy hh24:mi'), '3 н/х', '3', null, 'Удовлетворительное', null, null);
 insert into VIRI_PATIENT_ALL (case_history_id, registry_id, show_id, show_fullname, tempr_m, date_in, date_out, division_name, ward_name, doctor_name, sost, dataoperation, pass_type_name)
 values (384168, 1, '1289/17', 'БАРЛОВА ЛАРИСА МИХАЙЛОВНА  20.08.69', '36,8', to_date('07-03-2017 12:33:06', 'dd-mm-yyyy hh24:mi:ss'), null, '7 н/х', 'ПИТ', 'Калинин П.Л.', 'Удовлетворительное', null, null);
 insert into VIRI_PATIENT_ALL (case_history_id, registry_id, show_id, show_fullname, tempr_m, date_in, date_out, division_name, ward_name, doctor_name, sost, dataoperation, pass_type_name)

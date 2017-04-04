@@ -11,11 +11,45 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
             function CustomerViewModel() {
                 var self = this;
 //                self.data = ko.observableArray();
-                self.serviceURL = 'https://apex.oracle.com/pls/apex/ask2/rinfo/patient_out/';
+                self.serviceURL = 'https://apex.oracle.com/pls/apex/ask2/rinfo/patient_in/';
                 self.PatCol = ko.observable();
                 self.datasource = ko.observable();
                 self.nameSearch = ko.observable('');
+                self.currentRawValue = ko.observable();
 
+                self.refreshClick = function (data, event) {
+                    self.PatCol().fetch();
+//                    $('#table').ojTable('refresh');
+                };
+
+                self.optionChangeCallback = function (event, data) {
+                    if (data['option'] === "rawValue"){
+                        self.PatCol().fetch();
+                    };
+                };
+
+                function getVerb(verb) {
+                    if (verb === "update") {
+                        return 'POST';
+                    }
+                    if (verb === "delete") {
+                        return "DELETE";
+                    }
+                    if (verb === "create") {
+                        return "PUT"
+                    }
+                    return 'GET';
+                }
+                ;
+
+                function getURL(operation, collection, options) {
+                    var retObj = {};
+                    retObj['type'] = getVerb(operation);
+                    retObj['url'] = self.serviceURL + self.nameSearch().toString();
+                    console.log('getURL:'+self.serviceURL + self.currentRawValue().toString()+'*'+ self.nameSearch().toString());
+                    return self.serviceURL + self.currentRawValue().toString();
+                };
+                
                 console.log('1');                
                 /**
                  * Callback to map attributes returned from RESTful data service to desired view model attribute names
@@ -26,7 +60,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
                         show_id: response['show_id'],
                         show_fullname: response['show_fullname'],
                         date_in: new Date(response['date_in']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}),
-                        date_out: new Date(response['date_out']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'})};
+                        date_out: new Date(response['date_out']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}),
+                        division_name: response['division_name']};
                 };
                 
                 var PatRecord = oj.Model.extend({
@@ -50,10 +85,10 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
 
                 // Create a base object "class" for the entire task dataset 
                 self.PatCollection = oj.Collection.extend({
-                    url: self.serviceURL,
+                    url: getURL,
                     model: self.pat,
                     parse: self.parsePatCollection,
-                    comparator: "DepartmentId"
+                    comparator: 'case_history_id'
                  });
 
                 // Create a specific instance for the tasks.  This will be filled with instances of the
