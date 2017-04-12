@@ -1,25 +1,42 @@
 <!--
  Copyright (c) 2014, 2017, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
- -->
+-->
 
- <div class="oj-hybrid-padding-strt">
-     <h3>Госпитализированные</h3>
-
-     <label id="l1" for="switch_date_in" class="oj-label-inline">
-         Поступившие:</label>
-          <input id="switch_date_in" data-bind="ojComponent: {component: 'ojSwitch', value: isChecked}" />
-          <input aria-label="input date" 
-                data-bind="ojComponent: {
+<div class="oj-hybrid-padding-strt">
+    <div class="oj-flex oj-flex-items-pad">
+        <div class="oj-flex-item oj-sm-12 oj-padding-bottom">
+            <div class="oj-flex oj-flex-items-pad oj-sm-align-items-flex-end">  
+                <div id="pageTitleContainer" class="oj-flex-item oj-sm-6">
+                    <h3>Поступившие:</h3>
+                    <input id="switch_date_in" data-bind="ojComponent: {component: 'ojSwitch', value: isChecked}" />
+                    <input aria-label="input date" 
+                           data-bind="ojComponent: {
              component: 'ojInputDate',
              max: oj.IntlConverterUtils.dateToLocalIso(new Date()),
              value: oj.IntlConverterUtils.dateToLocalIso(new Date()),
              disabled: disabledState,
              keyboardEdit:'disabled',
              rootAttributes: {style:'max-width:150px'}}"> 
-     <div>
-         <table id="table"
-                data-bind="ojComponent: {
+                </div>
+                <div class="oj-flex-item oj-sm-4  oj-flex oj-md-justify-content-center">
+                    <div class="oj-flex-item" style="max-width: 90%; white-space: nowrap">
+                        <input aria-label="search box" placeholder="Введите ФИО в строку поиска" 
+                               data-bind="ojComponent: {component: 'ojInputText', value: nameSearch, rawValue: currentRawValue, valueUpdate: 'afterkeydown', optionChange: optionChangeCallback, rootAttributes:{'style':'max-width:100%;'}}"/>
+                        <div id="searchIcon" class="demo-icon-sprite demo-icon-search demo-search-position"></div>
+                    </div>
+                </div>     
+                <div class="oj-flex-item oj-sm-2">
+                    <button id="refresh"   style="float: right" data-bind="click: refreshClick, ojComponent: {component: 'ojButton', icons: {start:'oj-fwk-icon-reload oj-fwk-icon'}, label: 'Обновить'}">
+
+                    </button>
+                </div>
+            </div>    
+        </div>   
+    </div>   
+    <div>
+        <table id="table"
+               data-bind="ojComponent: {
                     component: 'ojTable',
                     data: datasource,
                     rootAttributes: {'style':'width: 100%; height:100%;'},
@@ -35,6 +52,6 @@
                         {headerText: 'Дата операции',  field: 'dataoperation',className: 'oj-helper-text-align-right'},
                         {headerText: 'Пропуск',  field: 'pass_type_name'}  
                     ]}">
-         </table>
-     </div>
- </div>
+        </table>
+    </div>
+</div>

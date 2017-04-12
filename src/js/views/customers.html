@@ -1,36 +1,35 @@
 <!--
  Copyright (c) 2014, 2017, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
- -->
+-->
 
- <div class="oj-hybrid-padding-strt">
+<div class="oj-hybrid-padding-strt">
+    <div class="oj-flex oj-flex-items-pad">
+        <div class="oj-flex-item oj-sm-12 oj-padding-bottom">
+            <div class="oj-flex oj-flex-items-pad oj-sm-align-items-flex-end">
+                <div id="pageTitleContainer" class="oj-flex-item oj-sm-2">
+                    <h2 style="margin-bottom:0">Архив</h2>
+                </div>
 
-     <div class="oj-flex oj-flex-items-pad">
-         <div class="oj-flex-item oj-sm-12 oj-padding-bottom">
-             <div class="oj-flex oj-flex-items-pad oj-sm-align-items-flex-end">
-                 <div id="pageTitleContainer" class="oj-flex-item oj-sm-2">
-                     <h2 style="margin-bottom:0">Архив</h2>
-                 </div>
+                <div class="oj-flex-item oj-sm-8  oj-flex oj-md-justify-content-center">
+                    <div class="oj-flex-item" style="max-width: 70%; white-space: nowrap">
+                        <input aria-label="search box" placeholder="Введите ФИО в строку поиска" 
+                               data-bind="ojComponent: {component: 'ojInputText', value: nameSearch, rawValue: currentRawValue, valueUpdate: 'afterkeydown', optionChange: optionChangeCallback, rootAttributes:{'style':'max-width:100%;'}}"/>
+                        <div id="searchIcon" class="demo-icon-sprite demo-icon-search demo-search-position"></div>
+                    </div>
+                </div>     
+                <div class="oj-flex-item oj-sm-2">
+                    <button id="refresh"   style="float: right" data-bind="click: refreshClick, ojComponent: {component: 'ojButton', icons: {start:'oj-fwk-icon-reload oj-fwk-icon'}, label: 'Обновить'}">
 
-                 <div class="oj-flex-item oj-sm-8  oj-flex oj-md-justify-content-center">
-                     <div class="oj-flex-item" style="max-width: 70%; white-space: nowrap">
-                         <input aria-label="search box" placeholder="Введите ФИО в строку поиска" 
-                                data-bind="ojComponent: {component: 'ojInputText', value: nameSearch, rawValue: currentRawValue, valueUpdate: 'afterkeydown', optionChange: optionChangeCallback, rootAttributes:{'style':'max-width:100%;'}}"/>
-                         <div id="searchIcon" class="demo-icon-sprite demo-icon-search demo-search-position"></div>
-                     </div>
-                 </div>     
-                 <div class="oj-flex-item oj-sm-2">
-                     <button id="refresh"   style="float: right" data-bind="click: refreshClick, ojComponent: {component: 'ojButton', icons: {start:'oj-fwk-icon-reload oj-fwk-icon'}, label: 'Обновить'}">
+                    </button>
+                </div>
+            </div>       
+        </div>   
+    </div>
 
-                     </button>
-                 </div>
-             </div>       
-         </div>   
-     </div>
-
-     <div>
-         <table id="table"
-                data-bind="ojComponent: {
+    <div>
+        <table id="table"
+               data-bind="ojComponent: {
                     component: 'ojTable',
                     data: datasource,
                     rootAttributes: {'style':'width: 100%; height:100%;'},
@@ -46,6 +45,6 @@
                         {headerText: 'Код',  field: 'IDC-10'},
                         {headerText: 'Диагноз',  field: 'diagnose'}  
                     ]}">
-         </table>
-     </div>
- </div>
+        </table>
+    </div>
+</div>

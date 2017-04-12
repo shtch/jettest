@@ -39,8 +39,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
                         return "PUT"
                     }
                     return 'GET';
-                }
-                ;
+                };
 
                 function getURL(operation, collection, options) {
                     var retObj = {};
@@ -75,12 +74,12 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
                     console.log('2');
                     if (response.hasOwnProperty('items')) {
                         var subVal = response['items'];
-                        return subVal;
-//                        if (subVal.hasOwnProperty('Array')) {
-//                            return subVal['array'].Departments;
-//                        }
+//                        return subVal;
+                        if (subVal.hasOwnProperty('0')) {
+                            return subVal['0'].patients;
+                        }
                     }
-                    return response;
+                    return subVal;
                 };
 
                 // Create a base object "class" for the entire task dataset 

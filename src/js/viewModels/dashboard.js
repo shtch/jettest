@@ -5,12 +5,17 @@
 /*
  * Your dashboard ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection-common', 'ojs/ojdatetimepicker', 'ojs/ojswitch'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection-common', 'ojs/ojdatetimepicker', 'ojs/ojswitch','ojs/ojmodel','ojs/ojcollectiontabledatasource', 'ojs/ojinputtext','ojs/ojbutton'],
         function (oj, ko, $) {
 
             function DashboardViewModel() {
                 var self = this;
+                self.serviceURL = 'https://apex.oracle.com/pls/apex/ask2/rinfo/patient_in/';
+
                 self.data = ko.observableArray();
+                self.nameSearch = ko.observable('');
+                self.nameSearch = ko.observable('');
+                self.currentRawValue = ko.observable();
                 
        		self.isChecked = ko.observable(false);
                 self.isChecked.subscribe(function (newValue){
@@ -19,8 +24,26 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection
                 
                 self.disabledState = ko.observable(true);
                 
+                self.refreshClick = function (data, event) {
+//                    self.PatCol().fetch();
+                    $('#table').ojTable('refresh');
+                };
+
+                self.optionChangeCallback = function (event, data) {
+//                   if (data['option'] === "rawValue"){
+//                        self.PatCol().fetch();
+//                    };
+                };                
+                function getURL(operation, collection, options) {
+                    var retObj = {};
+                    retObj['type'] = getVerb(operation);
+                    retObj['url'] = self.serviceURL + self.nameSearch().toString();
+                    console.log('getURL:'+self.serviceURL + self.currentRawValue().toString()+'*'+ self.nameSearch().toString());
+                    return self.serviceURL + self.currentRawValue().toString();
+                };
+                
                 console.log('3');
-                $.getJSON("https://apex.oracle.com/pls/apex/ask2/rinfo/patient_in/").
+                $.getJSON("https://apex.oracle.com/pls/apex/ask2/rinfo/patient_in/д").
                         then(function (json) {
                             var metrics = json.items;
                             console.log('1'+json);
