@@ -14,6 +14,7 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout',  'ojs/ojmodel','oj
                 self.serviceURL = 'https://apex.oracle.com/pls/apex/ask2/rinfo/patient_in/';
                 self.PatCol = ko.observable();
                 self.datasource = ko.observable();
+
                 self.nameSearch = ko.observable('');
                 self.currentRawValue = ko.observable();
 

@@ -11,8 +11,9 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection
             function DashboardViewModel() {
                 var self = this;
                 self.serviceURL = 'https://apex.oracle.com/pls/apex/ask2/rinfo/patient_in/';
+                self.PatCol = ko.observable();
+                self.datasource = ko.observable();
 
-                self.data = ko.observableArray();
                 self.nameSearch = ko.observable('');
                 self.nameSearch = ko.observable('');
                 self.currentRawValue = ko.observable();
@@ -25,24 +26,79 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection
                 self.disabledState = ko.observable(true);
                 
                 self.refreshClick = function (data, event) {
-//                    self.PatCol().fetch();
-                    $('#table').ojTable('refresh');
+                    self.PatCol().fetch();
+//                    $('#table').ojTable('refresh');
                 };
 
                 self.optionChangeCallback = function (event, data) {
-//                   if (data['option'] === "rawValue"){
-//                        self.PatCol().fetch();
-//                    };
+                   if (data['option'] === "rawValue"){
+                        self.PatCol().fetch();
+                    };
                 };                
                 function getURL(operation, collection, options) {
                     var retObj = {};
-                    retObj['type'] = getVerb(operation);
+//                    retObj['type'] = getVerb(operation);
                     retObj['url'] = self.serviceURL + self.nameSearch().toString();
                     console.log('getURL:'+self.serviceURL + self.currentRawValue().toString()+'*'+ self.nameSearch().toString());
                     return self.serviceURL + self.currentRawValue().toString();
                 };
                 
+                console.log('1');
+                /**
+                 * Callback to map attributes returned from RESTful data service to desired view model attribute names
+                 */
+                parsePat = function (response) {
                 console.log('3');
+                return {case_history_id: response['case_history_id'],
+                        show_id: response['show_id'],
+                        show_fullname: response['show_fullname'],
+                        tempr_m: response['tempr_m'],
+                        date_in: new Date(response['date_in']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}),
+//                        date_out: new Date(response['date_out']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}),
+                        division_name: response['division_name'],
+                        division_name: response['division_name'],
+                        ward_name: response['ward_name'],
+                        sost: response['sost'],
+                        doctor_name: response['doctor_name'],
+                        dataoperation: (Date.parse(response['dataoperation'])?new Date(response['dataoperation']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}):''),
+                        pass_type_name: response['pass_type_name']
+						};
+                };
+                
+                var PatRecord = oj.Model.extend({
+                    url: self.serviceURL,
+                    parse: parsePat,
+                    idAttribute: 'case_history_id'});				
+
+                self.pat = new PatRecord();
+
+                self.parsePatCollection = function (response) {
+                    console.log('2');
+                    if (response.hasOwnProperty('items')) {
+                        var subVal = response['items'];
+//                        return subVal;
+                        if (subVal.hasOwnProperty('0')) {
+                            return subVal['0'].patients;
+                        }
+                    }
+                    return subVal;
+                };
+
+                // Create a base object "class" for the entire task dataset 
+                self.PatCollection = oj.Collection.extend({
+                    url: getURL,
+                    model: self.pat,
+                    parse: self.parsePatCollection,
+                    comparator: 'case_history_id'
+                 });
+
+                // Create a specific instance for the tasks.  This will be filled with instances of the
+                // model "task" for each record when the data is retrieved from the data service
+//                var pats = new PatCollection();
+                self.PatCol(new self.PatCollection());          
+                self.datasource(new oj.CollectionTableDataSource(self.PatCol()));
+				
+/*				
                 $.getJSON("https://apex.oracle.com/pls/apex/ask2/rinfo/patient_in/д").
                         then(function (json) {
                             var metrics = json.items;
@@ -65,12 +121,13 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection
                                 });
                             });
                         });
-
-
+*/
+/*
                 self.datasource = new oj.ArrayTableDataSource(
                         self.data,
                         {idAttribute: 'case_history_id'}
                 );
+*/				
       // Below are a subset of the ViewModel methods invoked by the ojModule binding
       // Please reference the ojModule jsDoc for additionaly available methods.
 
