@@ -43,3 +43,18 @@ values (386413, 1, '1661/17', 'КАЛАВРЕНТЬЕВА ИГАЛИНА ПЕТ�
 insert into VIRI_PATIENT_ALL (case_history_id, registry_id, show_id, show_fullname, tempr_m, date_in, date_out, division_name, ward_name, doctor_name, sost, dataoperation, pass_type_name)
 values (386506, 1, '1675/17', 'ЛАШОМПОЛОВА СВЕТЛАНА БОРИСОВНА  21.07.76', '36,6', to_date('23-03-2017 17:23:01', 'dd-mm-yyyy hh24:mi:ss'), null, '8 н/х', '1', null, 'Удовлетворительное', null, null);
 Commit;
+drop table VIRI_REGISTRY;
+create table VIRI_REGISTRY (
+  registry_id NUMBER(16) not null,
+  sname       VARCHAR2(32),
+  descr       VARCHAR2(128),
+  reg_type    NUMBER(8),
+  active      NUMBER(8));
+  -- Create/Recreate primary, unique and foreign key constraints 
+alter table VIRI_REGISTRY  add constraint PK_REGISTRY2 primary key (REGISTRY_ID) using index;
+insert into VIRI_REGISTRY (registry_id,sname,descr,reg_type, active)
+values (1, 'Стационар','Стационар',1,1);
+insert into VIRI_REGISTRY (registry_id,sname,descr,reg_type, active)
+values (2, 'ДС','Дневной стационар',2,1);
+commit;
+
