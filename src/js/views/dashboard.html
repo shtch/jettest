@@ -1,3 +1,7 @@
+﻿<!--
+ Copyright (c) 2014, 2018, Oracle and/or its affiliates.
+ The Universal Permissive License (UPL), Version 1.0
+ -->
 <!--
  Copyright (c) 2014, 2017, Oracle and/or its affiliates.
  The Universal Permissive License (UPL), Version 1.0
@@ -21,37 +25,70 @@
                 </div>
                 <div class="oj-flex-item oj-sm-4  oj-flex oj-md-justify-content-center">
                     <div class="oj-flex-item" style="max-width: 90%; white-space: nowrap">
-                        <input aria-label="search box" placeholder="Введите ФИО в строку поиска" 
-                               data-bind="ojComponent: {component: 'ojInputText', value: nameSearch, rawValue: currentRawValue, valueUpdate: 'afterkeydown', optionChange: optionChangeCallback, rootAttributes:{'style':'max-width:100%;'}}"/>
+                        <input id="inputNameSearch" spellcheck="false" autocorrect="off" aria-label="search box" placeholder="Введите ФИО в строку поиска"  class="oj-combobox-clear-entry-icon"
+                               data-bind="ojComponent: {component: 'ojInputSearch', value: nameSearch, rawValue: nameSearchRawValue, valueUpdate: 'afterkeydown', rootAttributes:{'style':'max-width:100%;'}}">
                         <div id="searchIcon" class="demo-icon-sprite demo-icon-search demo-search-position"></div>
                     </div>
                 </div>     
                 <div class="oj-flex-item oj-sm-2">
                     <button id="refresh"   style="float: right" data-bind="click: refreshClick, ojComponent: {component: 'ojButton', icons: {start:'oj-fwk-icon-reload oj-fwk-icon'}, label: 'Обновить'}">
-
                     </button>
                 </div>
             </div>    
         </div>   
     </div>   
     <div>
-        <table id="table"
-               data-bind="ojComponent: {
-                    component: 'ojTable',
-                    data: datasource,
-                    rootAttributes: {'style':'width: 100%; height:100%;'},
-                    columns: [
-                        {headerText: '№ ИБ',  field: 'show_id'},
-                        {headerText: 'ФИО пациента',  field: 'show_fullname'},
-                        {headerText: 't',  field: 'tempr_m'},
-                        {headerText: 'Поступил',  field: 'date_in',className: 'oj-helper-text-align-right'},
-                        {headerText: 'Отделение',  field: 'division_name'},
-                        {headerText: 'Палата',  field: 'ward_name'},
-                        {headerText: 'Врач',  field: 'doctor_name'},  
-                        {headerText: 'Состояние',  field: 'sost'},
-                        {headerText: 'Дата операции',  field: 'dataoperation',className: 'oj-helper-text-align-right'},
-                        {headerText: 'Пропуск',  field: 'pass_type_name'}  
-                    ]}">
-        </table>
+        <oj-table id="table"
+                    data = "{{datasource}}"
+                    columns = '[
+                        {"headerText": "№ ИБ",  "field": "show_id"},
+                        {"headerText": "ФИО пациента",  "field": "show_fullname"},
+                        {"headerText": "t",  "field": "tempr_m"},
+                        {"headerText": "Поступил",  "field": "date_in", "className" : "oj-helper-text-align-right"},
+                        {"headerText": "Отделение",  "field": "division_name"},
+                        {"headerText": "Палата",  "field": "ward_name"},
+                        {"headerText": "Врач",  "field": "doctor_name"},  
+                        {"headerText": "Состояние",  "field": "sost"},
+                        {"headerText": "Дата операции",  "field": "dataoperation", "className" : "oj-helper-text-align-right"},
+                        {"headerText": "Пропуск",  "field": "pass_type_name"}]'
+					>
+        </oj-table>
+
+<!--		
+        <oj-table id="table"
+                    data: "{{datasource}}"
+                    columns = '[
+                        {"headerText": "№ ИБ",  "field": "show_id"},
+                        {"headerText": "ФИО пациента",  "field": "show_fullname"},
+                        {"headerText": "t",  "field": "tempr_m"},
+                        {"headerText": "Поступил",  "field": "date_in", "className" : "oj-helper-text-align-right"},
+                        {"headerText": "Отделение",  "field": "division_name"},
+                        {"headerText": "Палата",  "field": "ward_name"},
+                        {"headerText": "Врач",  "field": "doctor_name"},  
+                        {"headerText": "Состояние",  "field": "sost"},
+                        {"headerText": "Дата операции",  "field": "dataoperation", "className" : "oj-helper-text-align-right"},
+                        {"headerText": "Пропуск",  "field": "pass_type_name"}]'
+					>
+        </oj-table>
+-->		
     </div>
 </div>
+<template id="row_template">
+  <tr>
+    <td>
+      <oj-bind-text value="[[show_id]]"></oj-bind-text>
+    </td>
+    <td>
+      <oj-bind-text value="[[tempr_m]]"></oj-bind-text>
+    </td>
+    <td>
+      <oj-bind-text value="[[date_in]]"></oj-bind-text>
+    </td>
+    <td>
+      <oj-bind-text value="[[division_name]]"></oj-bind-text>
+    </td>
+    <td>
+      <oj-bind-text value="[[ward_name]]"></oj-bind-text>
+    </td>
+  </tr>
+</template>
