@@ -11,50 +11,52 @@ define(['ojs/ojcore', 'knockout', 'jquery','ojs/ojtable' ,'ojs/ojcollectiontable
   
     function DashboardViewModel() {
         var self = this;
-        self.serviceURL = 'https://apex.oracle.com/pls/apex/ask2/rinfo/patient_in/';
+        self.serviceURL = 'https://apex.oracle.com/pls/apex/priem/rinfo2/patient_in/';
        // Below are a set of the ViewModel methods invoked by the oj-module component.
         // Please reference the oj-module jsDoc for additional information.
        	self.isChecked = ko.observable(false);
         self.isChecked.subscribe(function (newValue){
             self.disabledState(!newValue);
+            self.PatCol().fetch();
         });        
 		
 		self.disabledState = ko.observable(false);
+		self.dateIn = ko.observable(oj.IntlConverterUtils.dateToLocalIso(new Date()));
+		self.dateIn.subscribe(function (newValue){
+                self.PatCol().fetch();
+        });   
+		
         self.nameSearch = ko.observable();
 		self.nameSearchRawValue = ko.observable();
 		self.nameSearchRawValue.subscribe(function (newValue){
                 self.PatCol().fetch();
         });        
 			
-       //self.currentRawValue = ko.observable();
 		self.datasource = ko.observable();
 	  
-//        self.optionChangeCallback = function (event, data) {
-//            if (data['option'] === "rawValue"){
-//                self.PatCol().fetch();
-//                console.log('4');
-//            };
-//        };                
 
         self.refreshClick = function (data, event) {
 			self.PatCol().fetch();
-//      		$('table').ojTable('refresh');
-                console.log('5');
+            console.log('5');
 			
-			};
+		};
 			
         function getURL(operation, collection, options) {
             var retObj = {};
             console.log('getURL');
 
 			//                    retObj['type'] = getVerb(operation);
-            retObj['url'] = self.serviceURL + self.nameSearchRawValue();//.toString();
-            console.log('getURL:'+retObj['url']); ///self.serviceURL + self.currentRawValue().toString()+'*'+ self.nameSearch().toString());
+//            retObj['url'] = self.serviceURL + self.nameSearchRawValue().toString();//.toString();
 			if (typeof self.nameSearchRawValue() === "undefined") {
-              return self.serviceURL;
+              retObj['url'] = self.serviceURL;
 			} else {
-              return self.serviceURL + self.nameSearchRawValue().toString();
+              retObj['url'] = self.serviceURL + "?p_name=" + encodeURIComponent(self.nameSearchRawValue().toString());
+			  if(self.isChecked()){
+				  retObj['url'] = retObj['url'] + '&p_date_in=' + self.dateIn().toString().substr(0,10);
+			  }		
 			};
+            console.log('getURL:'+retObj['url']); ///self.serviceURL + self.currentRawValue().toString()+'*'+ self.nameSearch().toString());
+			return retObj['url'];
         };
 	
         self.PatCol = ko.observable();
