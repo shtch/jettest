@@ -1,8 +1,9 @@
-node_modules/*
-bower_components/*
+/node_modules
+/bower_components
 /web
 /themes
 
+/hybrid/node_modules
 /hybrid/platforms
 /hybrid/www/*
 
@@ -12,6 +13,7 @@ hybrid/plugins/*
 
 .DS_Store
 Thumbs.db
-scripts/
-src/css/
 nbproject/
+scripts/
+src/css/fonts/App_iconfont.woff
+src/css/images/
