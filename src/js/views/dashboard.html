@@ -7,7 +7,7 @@
     <div class="oj-flex oj-flex-items-pad">
         <div class="oj-flex-item oj-sm-12 oj-padding-bottom">
             <div class="oj-flex oj-flex-items-pad oj-sm-align-items-flex-end">  
-                <div id="pageTitleContainer" class="oj-flex-item oj-sm-6">
+                <div id="pageTitleContainer" class="oj-flex-item oj-sm-4">
                     <h3>Поступившие:</h3>
                     <input id="switch_date_in" data-bind="ojComponent: {component: 'ojSwitch', value: isChecked}" />
                     <input aria-label="input date" 
@@ -19,6 +19,8 @@
              keyboardEdit:'disabled',
              rootAttributes: {style:'max-width:150px'}}"> 
                 </div>
+				<oj-select-one id="registry" label-hint='input label' options="[[regTags]]" value="{{regId}}" style="max-width:20em">
+                </oj-select-one>
                 <div class="oj-flex-item oj-sm-4  oj-flex oj-md-justify-content-center">
                     <div class="oj-flex-item" style="max-width: 90%; white-space: nowrap">
                         <input id="inputNameSearch" spellcheck="false" autocorrect="off" aria-label="search box" placeholder="Введите ФИО в строку поиска"  class="oj-combobox-clear-entry-icon"

@@ -25,8 +25,11 @@ define(['ojs/ojcore', 'knockout', 'jquery','ojs/ojtable' ,'ojs/ojcollectiontable
 		self.dateIn.subscribe(function (newValue){
                 self.PatCol().fetch();
         });   
+
+		self.regTags = ko.observableArray([]);
+		self.regId = ko.observable();
 		
-        self.nameSearch = ko.observable();
+        self.nameSearch = ko.observable('б'); //////////////!!!!!!!!!!!!!!!!
 		self.nameSearchRawValue = ko.observable();
 		self.nameSearchRawValue.subscribe(function (newValue){
                 self.PatCol().fetch();
@@ -59,45 +62,88 @@ define(['ojs/ojcore', 'knockout', 'jquery','ojs/ojtable' ,'ojs/ojcollectiontable
 			return retObj['url'];
         };
 	
-        self.PatCol = ko.observable();
-                /**
-                 * Callback to map attributes returned from RESTful data service to desired view model attribute names
-                 */
-                parsePat = function (response) {
-                console.log('parsePat.response');
-                return {case_history_id: response['case_history_id'],
-                        show_id: response['show_id'],
-                        show_fullname: response['show_fullname'],
-                        tempr_m: response['tempr_m'],
-                        date_in: new Date(response['date_in']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}),
-//                        date_out: new Date(response['date_out']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}),
-                        division_name: response['division_name'],
-                        division_name: response['division_name'],
-                        ward_name: response['ward_name'],
-                        sost: response['sost'],
-                        doctor_name: response['doctor_name'],
-                        dataoperation: (Date.parse(response['dataoperation'])?new Date(response['dataoperation']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}):''),
-                        pass_type_name: response['pass_type_name']
-						};
-                };
+		self.RegCol = ko.observable();
 
-                self.parsePatCollection = function (response) {
-                    console.log('parsePatCollection.response');
-                    if (response.hasOwnProperty('items')) {
-                        var subVal = response['items'];
-//                        return subVal;
-                        if (subVal.hasOwnProperty('0')) {
-                            return subVal['0'].patients;
-                        }
-                    }
-                    return subVal;
-                };
+        /**
+        * Callback to map attributes returned from RESTful data service to desired view model attribute names
+        */
+        parseReg = function (response) {
+        console.log('parseReg.response');
+        return {p_code: response['p_code'],
+            p_name: response['p_name']
+			};
+        };
+
+        self.parseRegCollection = function (response) {
+			console.log('parsePatCollection.response');
+            if (response.hasOwnProperty('items')) {
+                var subVal = response['items'];
+                if (subVal.hasOwnProperty('0')) {
+                    return subVal['0'].registries;
+                }
+            }
+            return subVal;
+        };
+		
+		self.RegRecord = oj.Model.extend({
+            urlRoot: self.serviceURL,
+            parse: parseReg,
+            idAttribute: 'p_code'
+		});				
+		
+        self.reg = new self.RegRecord();
+		
+        self.RegCollection = oj.Collection.extend({
+            url: self.serviceURL + 'registry/',
+            model: self.reg,
+            parse: self.parseRegCollection,
+            comparator: 'p_code'
+        });
+
+		
+		
+        self.RegCol(new self.RegCollection()); 
+/*---------------------*/		
+		self.PatCol = ko.observable();
+        /**
+        * Callback to map attributes returned from RESTful data service to desired view model attribute names
+        */
+        parsePat = function (response) {
+        console.log('parsePat.response');
+        return {case_history_id: response['case_history_id'],
+            show_id: response['show_id'],
+            show_fullname: response['show_fullname'],
+            tempr_m: response['tempr_m'],
+            date_in: new Date(response['date_in']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}),
+//                        date_out: new Date(response['date_out']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}),
+            division_name: response['division_name'],
+            division_name: response['division_name'],
+            ward_name: response['ward_name'],
+            sost: response['sost'],
+            doctor_name: response['doctor_name'],
+            dataoperation: (Date.parse(response['dataoperation'])?new Date(response['dataoperation']).toLocaleString("ru",{day:'numeric',month:'2-digit',year: '2-digit'}):''),
+            pass_type_name: response['pass_type_name']
+			};
+        };
+
+        self.parsePatCollection = function (response) {
+			console.log('parsePatCollection.response');
+            if (response.hasOwnProperty('items')) {
+                var subVal = response['items'];
+                if (subVal.hasOwnProperty('0')) {
+                    return subVal['0'].patients;
+                }
+            }
+            return subVal;
+        };
 				
         self.PatRecord = oj.Model.extend({
             urlRoot: self.serviceURL,
             parse: parsePat,
             idAttribute: 'case_history_id'
 		});				
+		
+		
 		
         self.pat = new self.PatRecord();
 		
