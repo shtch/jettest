@@ -1,5 +1,5 @@
 /**
-  Copyright (c) 2015, 2017, Oracle and/or its affiliates.
+  Copyright (c) 2015, 2018, Oracle and/or its affiliates.
   The Universal Permissive License (UPL), Version 1.0
 */
 'use strict';
@@ -12,7 +12,7 @@ module.exports = function(grunt) {
   	configPath: path.join(process.cwd(), 'scripts/grunt/config')
   });
 
-  grunt.loadNpmTasks("grunt-oraclejet");
+  grunt.loadNpmTasks("@oracle/grunt-oraclejet");
 
   grunt.registerTask("build", "Public task. Calls oraclejet-build to build the oraclejet application. Can be customized with additional build tasks.", function (buildType) {
     grunt.task.run([`oraclejet-build:${buildType}`]);

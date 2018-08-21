@@ -5,12 +5,12 @@
 /*
  * Your dashboard ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatacollection-common', 'ojs/ojdatetimepicker', 'ojs/ojswitch','ojs/ojmodel','ojs/ojcollectiontabledatasource', 'ojs/ojinputtext','ojs/ojbutton'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojtable', 'ojs/ojdatetimepicker', 'ojs/ojswitch','ojs/ojmodel','ojs/ojcollectiontabledatasource', 'ojs/ojinputtext','ojs/ojbutton'],
         function (oj, ko, $) {
 
             function DashboardViewModel() {
                 var self = this;
-                self.serviceURL = 'https://apex.oracle.com/pls/apex/ask2/rinfo/patient_in/';
+                self.serviceURL = 'https://apex.oracle.com/pls/apex/priem/rinfo/patient_in/';
                 self.PatCol = ko.observable();
                 self.datasource = ko.observable();
 

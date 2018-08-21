@@ -1,74 +1,98 @@
 /**
- * Copyright (c) 2014, 2017, Oracle and/or its affiliates.
+ * @license
+ * Copyright (c) 2014, 2018, Oracle and/or its affiliates.
  * The Universal Permissive License (UPL), Version 1.0
  */
 /*
  * Your incidents ViewModel code goes here
  */
-define(['ojs/ojcore', 'knockout', 'jquery'],
+define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojselectcombobox', 'ojs/ojarraydataprovider'],
  function(oj, ko, $) {
   
     function IncidentsViewModel() {
-      var self = this;
-      // Below are a subset of the ViewModel methods invoked by the ojModule binding
-      // Please reference the ojModule jsDoc for additionaly available methods.
+      const self = this;
+      // Below are a set of the ViewModel methods invoked by the oj-module component.
+      // Please reference the oj-module jsDoc for additional information.
+    self.tags = ko.observableArray([]);
+    $.getJSON("https://apex.oracle.com/pls/apex/priem/rinfo2/registry/")
+      .then(users => {
+        let tempArray = [];
+        $.each(users.items, (idx, data) => {
+          tempArray.push({
+            value: data.p_name,
+            code: data.p_name
+          });
+        });
+        self.tags(tempArray);
+      });
 
-      /**
-       * Optional ViewModel method invoked when this ViewModel is about to be
-       * used for the View transition.  The application can put data fetch logic
-       * here that can return a Promise which will delay the handleAttached function
-       * call below until the Promise is resolved.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
-       * @return {Promise|undefined} - If the callback returns a Promise, the next phase (attaching DOM) will be delayed until
-       * the promise is resolved
-       */
-      self.handleActivated = function(info) {
-        // Implement if needed
-      };
+    self.tagsDataProvider = new oj.ArrayDataProvider(self.tags, {
+        keyAttributes: 'value'
+      });
+	     self.searchTriggered = ko.observable();
+    self.searchTerm = ko.observable();
+    self.searchTimeStamp = ko.observable();
 
+    self.search = function(event) {
+      var eventTime = getCurrentTime();
+      var trigger = event.type;
+      var term;
+
+      if (trigger === "ojValueUpdated") {
+        // search triggered from input field
+        // getting the search term from the ojValueUpdated event
+        term = event['detail']['value'];
+        trigger += " event";
+      } else {
+        // search triggered from end slot
+        // getting the value from the element to use as the search term.
+        term = document.getElementById("search").value;
+        trigger = "click on search button";
+      }
+
+      self.searchTriggered("Search triggered by: " + trigger);
+      self.searchTerm("Search term: " + term);
+      self.searchTimeStamp("Last search fired at: " + eventTime);
+    };
+
+    function getCurrentTime() {
+      var date = new Date();
+      return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + "." + date.getMilliseconds();
+    }
+
+  
+//  ko.applyBindings(new IncidentsViewModel());
+ 
       /**
        * Optional ViewModel method invoked after the View is inserted into the
        * document DOM.  The application can put logic that requires the DOM being
-       * attached here.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
-       * @param {boolean} info.fromCache - A boolean indicating whether the module was retrieved from cache.
+       * attached here. 
+       * This method might be called multiple times - after the View is created 
+       * and inserted into the DOM and after the View is reconnected 
+       * after being disconnected.
        */
-      self.handleAttached = function(info) {
+      self.connected = function() {
         // Implement if needed
       };
-
 
       /**
-       * Optional ViewModel method invoked after the bindings are applied on this View. 
-       * If the current View is retrieved from cache, the bindings will not be re-applied
-       * and this callback will not be invoked.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
+       * Optional ViewModel method invoked after the View is disconnected from the DOM.
        */
-      self.handleBindingsApplied = function(info) {
+      self.disconnected = function() {
         // Implement if needed
       };
 
-      /*
-       * Optional ViewModel method invoked after the View is removed from the
-       * document DOM.
-       * @param {Object} info - An object with the following key-value pairs:
-       * @param {Node} info.element - DOM element or where the binding is attached. This may be a 'virtual' element (comment node).
-       * @param {Function} info.valueAccessor - The binding's value accessor.
-       * @param {Array} info.cachedNodes - An Array containing cached nodes for the View if the cache is enabled.
+      /**
+       * Optional ViewModel method invoked after transition to the new View is complete.
+       * That includes any possible animation between the old and the new View.
        */
-      self.handleDetached = function(info) {
+      self.transitionCompleted = function() {
         // Implement if needed
       };
     }
 
     /*
-     * Returns a constructor for the ViewModel so that the ViewModel is constrcuted
+     * Returns a constructor for the ViewModel so that the ViewModel is constructed
      * each time the view is displayed.  Return an instance of the ViewModel if
      * only one instance of the ViewModel is needed.
      */
