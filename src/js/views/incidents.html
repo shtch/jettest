@@ -6,9 +6,9 @@
   <h3>Очередь на госпитализацию</h3>
 <div id="form1">
   <oj-label for="search">Поиск</oj-label>
-  <oj-combobox-one id="search" options="[[tagsDataProvider]]" filter-on-open="rawValue" on-oj-value-updated="[[search]]" placeholder="Search..." style="max-width:20em">
+  <oj-select-one id="search" options="[[tagsDataProvider]]" filter-on-open="rawValue" on-oj-value-updated="[[search]]" placeholder="Поиск..." style="max-width:20em">
     <a slot="end" id="search-button" class="demo-search-button oj-fwk-icon-magnifier oj-fwk-icon oj-clickable-icon-nocontext" style="width: 32px;" role="button" aria-label="search" on-click="[[search]]"></a>
-  </oj-combobox-one>
+  </oj-select-one>
   <br/><br/>
   <div style="color: blue">
     <oj-bind-text value="[[searchTriggered]]"></oj-bind-text>

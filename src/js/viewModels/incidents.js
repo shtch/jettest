@@ -19,8 +19,8 @@ define(['ojs/ojcore', 'knockout', 'jquery', 'ojs/ojknockout', 'ojs/ojselectcombo
         let tempArray = [];
         $.each(users.items, (idx, data) => {
           tempArray.push({
-            value: data.p_name,
-            code: data.p_name
+            value: data.p_code,
+            label: data.p_name
           });
         });
         self.tags(tempArray);
